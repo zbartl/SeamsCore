@@ -21,7 +21,7 @@ namespace SeamsCore.Domain
         public virtual Page Page { get; set; }
 
         [Required]
-        public int ContainerColumn { get; set; }
+        public int PageColumn { get; set; }
 
         public virtual List<PageSlotHtml> Versions { get; set; }
 

@@ -20,5 +20,16 @@ namespace SeamsCore.Features.Page
             var model = await _mediator.SendAsync(query);
             return View(model);
         }
+
+        [Route("save")]
+        [HttpPost]
+        public JsonResult Save(Save.Command command)
+        {
+            _mediator.Send(command);
+
+            var result = new { Success = "True", Message = "Error Message" };
+            return Json(result);
+        }
+
     }
 }
