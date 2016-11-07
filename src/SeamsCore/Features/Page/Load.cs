@@ -23,12 +23,15 @@ namespace SeamsCore.Features.Page
             public string Primary { get; set; }
             public string Secondary { get; set; }
             public string Tertiary { get; set; }
+            public string Title { get; set; }
+            public int Columns { get; set; }
             public List<Slot> Slots { get; set; }
         }
 
         public class Slot
         {
             public string SeaId { get; set; }
+            public int PageColumn { get; set; }
             public string Html { get; set; }
         }
 

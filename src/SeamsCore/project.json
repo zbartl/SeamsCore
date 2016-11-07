@@ -6,6 +6,7 @@
     "HtmlTags.AspNetCore": "4.2.0",
     "MediatR": "2.1.0",
     "MediatR.Extensions.Microsoft.DependencyInjection": "1.0.1",
+    "StructureMap.Microsoft.DependencyInjection": "1.2.0",
     "Microsoft.AspNetCore.Diagnostics": "1.0.0",
     "Microsoft.AspNetCore.Mvc": "1.0.1",
     "Microsoft.AspNetCore.Razor.Tools": {

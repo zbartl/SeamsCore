@@ -14,11 +14,14 @@ namespace SeamsCore.Features.Page
             _mediator = mediator;
         }
 
-        [Route("/load/{Primary}/{Secondary?}/{Tertiary?}")]
+        [Route("load/{Primary}/{Secondary?}/{Tertiary?}")]
         public async Task<IActionResult> Load(Load.Query query)
         {
-            var model = await _mediator.SendAsync(query);
-            return View(model);
+            //var model = await _mediator.SendAsync(query);
+            ViewBag.Primary = query.Primary;
+            ViewBag.Secondary = query.Secondary;
+            ViewBag.Tertiary = query.Tertiary;
+            return View(new Load.Result());
         }
 
         [Route("save")]

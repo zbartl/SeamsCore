@@ -11,6 +11,9 @@ using SeamsCore.Infrastructure;
 using AutoMapper;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using FluentValidation.AspNetCore;
+using StructureMap;
+using SeamsCore.Infrastructure.Decorators;
 
 namespace SeamsCore
 {
@@ -29,7 +32,7 @@ namespace SeamsCore
         public IConfigurationRoot Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
-        public void ConfigureServices(IServiceCollection services)
+        public IServiceProvider ConfigureServices(IServiceCollection services)
         {
             // Add framework services.
             services.AddMvc(opt =>
@@ -51,18 +54,43 @@ namespace SeamsCore
                     options.ViewLocationFormats.Add("/Features/{3}/{0}.cshtml");
                     options.ViewLocationFormats.Add("/Features/Shared/{0}.cshtml");
                     options.ViewLocationExpanders.Add(new FeatureViewLocationExpander());
-                });
-                //.AddFluentValidation(cfg => { cfg.RegisterValidatorsFromAssemblyContaining<Startup>(); });
+                })
+                .AddFluentValidation(cfg => { cfg.RegisterValidatorsFromAssemblyContaining<Startup>(); });
 
             services.AddAutoMapper(typeof(Startup));
             services.AddMediatR(typeof(Startup));
-
             services.AddDbContext<SeamsContext>(options => options.UseSqlServer(Configuration["Data:DefaultConnection:ConnectionString"]));
+
+            return ConfigureIoC(services);
             //var dbOptionsBuilder = new DbContextOptionsBuilder<SeamsContext>();
             //dbOptionsBuilder.UseSqlServer(Configuration["Data:DefaultConnection:ConnectionString"]);
             //services.AddScoped(_ => new SeamsContext(dbOptionsBuilder.Options));
 
             //services.AddHtmlTags(new TagConventions());
+        }
+
+        public IServiceProvider ConfigureIoC(IServiceCollection services)
+        {
+            var container = new Container();
+
+            container.Configure(config =>
+            {
+                config.Scan(_ =>
+                {
+                    _.AssemblyContainingType(typeof(Startup));
+                    _.WithDefaultConventions();
+                    //_.AddAllTypesOf<IGamingService>();
+                    //_.ConnectImplementationsToTypesClosing(typeof(IValidator<>));
+                });
+
+                //config.For(typeof(IValidator<>)).Add(typeof(DefaultValidator<>));
+                config.For(typeof(IRequestHandler<,>)).DecorateAllWith(typeof(MediatorPipeline<,>));
+
+                //Populate the container using the service collection
+                config.Populate(services);
+            });
+
+            return container.GetInstance<IServiceProvider>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

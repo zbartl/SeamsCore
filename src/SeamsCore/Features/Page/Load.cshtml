@@ -1,4 +1,4 @@
-﻿@model SeamsCore.Domain.Page
+﻿@model SeamsCore.Features.Page.Load.Result
 
 @{
     ViewBag.Title = Model.Title;
@@ -6,6 +6,15 @@
 
 @*@section page_settings {
     @Html.Action("DynamicPageSettings", "Page", Model)
-}
+}*@
 
-@Html.EmergePageContent()*@
+@Html.EmergePageContent()
+
+@ViewBag.Primary
+<br/>
+<br/>
+@ViewBag.Secondary
+<br/>
+<br/>
+<br/>
+@ViewBag.Tertiary
