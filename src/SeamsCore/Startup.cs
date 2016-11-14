@@ -14,6 +14,8 @@ using Microsoft.EntityFrameworkCore;
 using FluentValidation.AspNetCore;
 using StructureMap;
 using SeamsCore.Infrastructure.Decorators;
+using SeamsCore.Domain;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace SeamsCore
 {
@@ -34,7 +36,25 @@ namespace SeamsCore
         // This method gets called by the runtime. Use this method to add services to the container.
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
-            // Add framework services.
+            services.AddIdentity<User, IdentityRole>()
+                .AddEntityFrameworkStores<SeamsContext>()
+                .AddDefaultTokenProviders();
+            services.Configure<IdentityOptions>(options =>
+            {
+                // Cookie settings
+                options.Cookies.ApplicationCookie.ExpireTimeSpan = TimeSpan.FromDays(150);
+                options.Cookies.ApplicationCookie.LoginPath = "/Account/LogIn";
+                options.Cookies.ApplicationCookie.LogoutPath = "/Account/LogOff";
+
+                // User settings
+                options.User.RequireUniqueEmail = true;
+            });
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("Edit",
+                    policy => policy.RequireRole("Host", "Admin"));
+            });
+
             services.AddMvc(opt =>
                 {
                     opt.Conventions.Add(new FeatureConvention());
@@ -110,6 +130,8 @@ namespace SeamsCore
             }
 
             app.UseStaticFiles();
+
+            app.UseIdentity();
 
             app.UseMvc(routes =>
             {

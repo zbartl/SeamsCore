@@ -13,7 +13,7 @@
 
     public class Save
     {
-        public class Command : IRequest
+        public class Command : IAsyncRequest
         {
             public Command()
             {
@@ -40,7 +40,7 @@
             }
         }
 
-        public class Handler : RequestHandler<Command>
+        public class Handler : AsyncRequestHandler<Command>
         {
             private readonly SeamsContext _db;
 
@@ -49,45 +49,25 @@
                 _db = db;
             }
 
-            protected override void HandleCore(Command message)
+            protected override async Task HandleCore(Command message)
             {
-                var page = _db.Pages.FirstOrDefault(p =>
+                var page = await _db.Pages.FirstOrDefaultAsync(p =>
                     p.Primary == message.ModifiedSlots.First().Primary &&
                     p.Secondary == message.ModifiedSlots.First().Secondary &&
                     p.Tertiary == message.ModifiedSlots.First().Tertiary);
 
-                foreach (var slot in message.ModifiedSlots)
-                {
-                    UpdatePageSlot(page, slot.SeaId, slot.Html);
-                }
-            }
+                PageSlot slot;
 
-            private void UpdatePageSlot(Page page, string seaId, string html)
-            {
-                var slot = _db.PageSlots.FirstOrDefault(s => s.PageId == page.Id && s.SeaId == seaId);
-
-                if (slot == null)
+                foreach (var modifiedSlot in message.ModifiedSlots)
                 {
-                    slot = new PageSlot
+                    slot = await _db.PageSlots.FirstOrDefaultAsync(s => s.PageId == page.Id && s.SeaId == modifiedSlot.SeaId);
+                    if (slot == null)
                     {
-                        SeaId = seaId,
-                        PageColumn = 0,
-                        Versions = new List<PageSlotHtml>()
-                        {
-                            new PageSlotHtml()
-                            {
-                                Html = html
-                            }
-                        }
-                    };
-                    page.Slots.Add(slot);
-                }
-                else
-                {
-                    slot.Versions.Add(new PageSlotHtml
-                    {
-                        Html = html
-                    });
+                        slot = new PageSlot();
+                        slot.Versions = new List<PageSlotHtml>();
+                        page.Slots.Add(slot);
+                    }
+                    slot.UpdateHtml(modifiedSlot.Html);
                 }
             }
         }

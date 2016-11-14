@@ -44,5 +44,11 @@ namespace SeamsCore.Domain
         [ForeignKey("TemplateId")]
         public virtual PageTemplate Template { get; set; }
 
+        public void Handle(Features.PageSettings.Save.Command message)
+        {
+            IsInNavigation = message.IsInNavigation;
+            Title = message.Title;
+            Redirect = message.Redirect;
+        }
     }
 }

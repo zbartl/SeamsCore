@@ -30,5 +30,13 @@ namespace SeamsCore.Domain
         {
             get { return Versions.Last(); }
         }
+
+        public void UpdateHtml(string html)
+        {
+            Versions.Add(new PageSlotHtml
+            {
+                Html = html
+            });
+        }
     }
 }

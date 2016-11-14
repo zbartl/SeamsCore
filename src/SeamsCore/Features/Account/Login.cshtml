@@ -1,0 +1,44 @@
+﻿@model SeamsCore.Features.Account.Login.Command
+
+@{
+    ViewBag.Title = "Log in";
+}
+<br />
+<br />
+<br />
+<br />
+<div class="mvseams">
+    <div class="mvseams_ui">
+        <div class="mvseams_ui_page">
+            <div class="mvseams_ui_segment text-center">
+                <div class="log-in">
+                    @using (Html.BeginForm("login", "account", new { ReturnUrl = ViewData["ReturnUrl"] }))
+                    {
+                        @Html.AntiForgeryToken()
+                        @Html.ValidationSummary(true)
+                        <div class="row">
+                            <div class="col-xs-8 login-field">
+                                @Html.TextBoxFor(m => m.Email, new { @placeholder = "username", @class = "form-control" })
+                                @Html.ValidationMessageFor(m => m.Email)
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-8 login-field">
+                                @Html.PasswordFor(m => m.Password, new { @placeholder = "password", @class = "form-control" })
+                                @Html.ValidationMessageFor(m => m.Password)
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-8 login-field">
+                                <input type="submit" class="btn btn-block mvseams_btn" value="Log in" />
+                            </div>
+                        </div>
+                        @*<p>
+                                @Html.ActionLink("Register", "Register") if you don't have an account.
+                            </p>*@
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

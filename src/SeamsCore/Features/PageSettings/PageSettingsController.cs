@@ -1,27 +1,30 @@
 ﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using MediatR;
+using SeamsCore.Domain;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authorization;
 
-namespace SeamsCore.Features.Page
+namespace SeamsCore.Features.PageSettings
 {
-    [Route("page")]
-    public class PageController : Controller
+    [Authorize(Policy = "Edit")]
+    [Route("page-settings")]
+    public class PageSettingsController : Controller
     {
         private readonly IMediator _mediator;
+        private readonly UserManager<User> _userManager;
 
-        public PageController(IMediator mediator)
+        public PageSettingsController(IMediator mediator, UserManager<User> userManager)
         {
             _mediator = mediator;
+            _userManager = userManager;
         }
 
         [Route("load/{Primary}/{Secondary?}/{Tertiary?}")]
         public async Task<IActionResult> Load(Load.Query query)
         {
-            //var model = await _mediator.SendAsync(query);
-            ViewBag.Primary = query.Primary;
-            ViewBag.Secondary = query.Secondary;
-            ViewBag.Tertiary = query.Tertiary;
-            return View(new Load.Result());
+            var settings = await _mediator.SendAsync(query);
+            return View(settings);
         }
 
         [Route("save")]

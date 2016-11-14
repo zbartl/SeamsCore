@@ -3,10 +3,11 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
 using System.Data;
 using SeamsCore.Domain;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace SeamsCore.Infrastructure
 {
-    public class SeamsContext : DbContext
+    public class SeamsContext : IdentityDbContext<User>
     {
         private IDbContextTransaction _currentTransaction;
 
