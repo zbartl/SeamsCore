@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace SeamsCore.Features.Shared.Filters
 {
-    public class SeamsVisibleAttribute : IActionFilter
+    public class SeamsVisible : ActionFilterAttribute
     {
         //This attribute only serves to notify the Page Management that the given action exists.
 
@@ -18,6 +18,5 @@ namespace SeamsCore.Features.Shared.Filters
         public void OnActionExecuted(ActionExecutedContext context)
         {
         }
-
     }
 }

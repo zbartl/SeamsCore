@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using SeamsCore.Infrastructure;
 using Microsoft.EntityFrameworkCore;
+using SeamsCore.Features.Shared.Filters;
 
 namespace SeamsCore.Features.Home
 {
@@ -16,6 +17,8 @@ namespace SeamsCore.Features.Home
         {
             _db = db;
         }
+
+        [SeamsVisible]
         public async Task<IActionResult> Index()
         {
             return View();

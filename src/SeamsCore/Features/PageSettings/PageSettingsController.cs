@@ -12,19 +12,10 @@ namespace SeamsCore.Features.PageSettings
     public class PageSettingsController : Controller
     {
         private readonly IMediator _mediator;
-        private readonly UserManager<User> _userManager;
 
-        public PageSettingsController(IMediator mediator, UserManager<User> userManager)
+        public PageSettingsController(IMediator mediator)
         {
             _mediator = mediator;
-            _userManager = userManager;
-        }
-
-        [Route("load/{Primary}/{Secondary?}/{Tertiary?}")]
-        public async Task<IActionResult> Load(Load.Query query)
-        {
-            var settings = await _mediator.SendAsync(query);
-            return View(settings);
         }
 
         [Route("save")]

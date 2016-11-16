@@ -4,17 +4,8 @@
     ViewBag.Title = Model.Title;
 }
 
-@*@section page_settings {
-    @Html.Action("DynamicPageSettings", "Page", Model)
-}*@
+@section page_settings {
+    @await Component.InvokeAsync("PageSettings", new { Primary = Model.Primary, Secondary = Model.Secondary, Tertiary = Model.Tertiary })
+}
 
 @Html.EmergePageContent()
-
-@ViewBag.Primary
-<br/>
-<br/>
-@ViewBag.Secondary
-<br/>
-<br/>
-<br/>
-@ViewBag.Tertiary
