@@ -1,4 +1,5 @@
-﻿@{
+﻿@model SeamsCore.Features.Page.Load.Result
+@{
     ViewData["Title"] = "Home Page";
 }
 
@@ -9,16 +10,13 @@
         <li data-target="#myCarousel" data-slide-to="2"></li>
         <li data-target="#myCarousel" data-slide-to="3"></li>
     </ol>
+    @Html.EmergePageContent("test")
     <div class="carousel-inner" role="listbox">
         <div class="item active">
             <img src="~/images/banner1.svg" alt="ASP.NET" class="img-responsive" />
             <div class="carousel-caption" role="option">
                 <p>
                     Learn how to build ASP.NET apps that can run anywhere. 
-                    <br/>
-                    @ViewBag.Message
-                    <br/>
-                    <p>whaaaaaaat</p>
                     <a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkID=525028&clcid=0x409">
                         Learn More
                     </a>

@@ -74,7 +74,7 @@
             return tag;
         }
 
-        public static HtmlTag EmergePageContent(this IHtmlHelper<Page> helper, string seaid)
+        public static HtmlTag EmergePageContent(this IHtmlHelper<Load.Result> helper, string seaid)
         {
             var model = helper.ViewData.Model;
 
@@ -90,7 +90,7 @@
             }
             else
             {
-                slotTag.AppendHtml(new HtmlString(slot.LatestVersion.Html).ToString());
+                slotTag.AppendHtml(new HtmlString(slot.Html).ToString());
             }
 
             return slotTag;

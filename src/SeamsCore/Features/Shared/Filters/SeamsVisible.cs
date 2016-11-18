@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using MediatR;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using System;
 using System.Collections.Generic;
@@ -7,16 +8,39 @@ using System.Threading.Tasks;
 
 namespace SeamsCore.Features.Shared.Filters
 {
-    public class SeamsVisible : ActionFilterAttribute
+    public class SeamsVisible : IAsyncActionFilter
     {
-        //This attribute only serves to notify the Page Management that the given action exists.
+        private readonly IMediator _mediator;
 
-        public void OnActionExecuting(ActionExecutingContext context)
+        public SeamsVisible(IMediator mediator)
         {
+            _mediator = mediator;
         }
 
-        public void OnActionExecuted(ActionExecutedContext context)
+        public async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
         {
+            // Create a new page if this controller/action does not have one yet.
+            await _mediator.SendAsync(new Page.CreateWhenNonexistent.Command
+            {
+                Primary = context.Controller.ToString(),
+                Secondary = context.ActionDescriptor.ToString(),
+                Tertiary = ""
+            });
+
+            var page = await _mediator.SendAsync(new Page.Load.Query
+            {
+                Primary = context.Controller.ToString(),
+                Secondary = context.ActionDescriptor.ToString(),
+                Tertiary = ""
+            });
+
+            var controller = context.Controller as Controller;
+            if (controller != null)
+            {
+                controller.TempData["page"] = page;
+            }
+
+            await next();
         }
     }
 }

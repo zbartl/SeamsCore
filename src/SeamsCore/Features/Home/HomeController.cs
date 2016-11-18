@@ -6,22 +6,24 @@ using Microsoft.AspNetCore.Mvc;
 using SeamsCore.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using SeamsCore.Features.Shared.Filters;
+using MediatR;
 
 namespace SeamsCore.Features.Home
 {
     public class HomeController : Controller
     {
-        private readonly SeamsContext _db;
+        private readonly IMediator _mediator;
 
-        public HomeController(SeamsContext db)
+        public HomeController(IMediator mediator)
         {
-            _db = db;
+            _mediator = mediator;
         }
 
-        [SeamsVisible]
+        [ServiceFilter(typeof(SeamsVisible))]
         public async Task<IActionResult> Index()
         {
-            return View();
+            var page = TempData["page"] as Page.Load.Result;
+            return View(page);
         }
 
         public IActionResult Error()
