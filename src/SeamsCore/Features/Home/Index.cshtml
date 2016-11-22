@@ -2,6 +2,13 @@
 @{
     ViewData["Title"] = "Home Page";
 }
+@section scripts {
+    <script>
+        $(function() {
+            Page.Load.init();
+        });
+    </script>
+} 
 
 <div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="6000">
     <ol class="carousel-indicators">

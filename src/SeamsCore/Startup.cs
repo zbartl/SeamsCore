@@ -16,6 +16,8 @@ using StructureMap;
 using SeamsCore.Infrastructure.Decorators;
 using SeamsCore.Domain;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using HtmlTags;
+using SeamsCore.Infrastructure.Tags;
 
 namespace SeamsCore
 {
@@ -36,6 +38,11 @@ namespace SeamsCore
         // This method gets called by the runtime. Use this method to add services to the container.
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
+            services.AddDataProtection();
+
+            services.AddDistributedMemoryCache();
+            services.AddSession();
+
             services.AddIdentity<User, IdentityRole>()
                 .AddEntityFrameworkStores<SeamsContext>()
                 .AddDefaultTokenProviders();
@@ -80,13 +87,9 @@ namespace SeamsCore
             services.AddAutoMapper(typeof(Startup));
             services.AddMediatR(typeof(Startup));
             services.AddDbContext<SeamsContext>(options => options.UseSqlServer(Configuration["Data:DefaultConnection:ConnectionString"]));
+            services.AddHtmlTags(new TagConventions());
 
             return ConfigureIoC(services);
-            //var dbOptionsBuilder = new DbContextOptionsBuilder<SeamsContext>();
-            //dbOptionsBuilder.UseSqlServer(Configuration["Data:DefaultConnection:ConnectionString"]);
-            //services.AddScoped(_ => new SeamsContext(dbOptionsBuilder.Options));
-
-            //services.AddHtmlTags(new TagConventions());
         }
 
         public IServiceProvider ConfigureIoC(IServiceCollection services)
@@ -130,6 +133,8 @@ namespace SeamsCore
             }
 
             app.UseStaticFiles();
+
+            app.UseSession();
 
             app.UseIdentity();
 

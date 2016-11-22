@@ -19,20 +19,30 @@ namespace SeamsCore.Features.Shared.Filters
 
         public async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
         {
-            // Create a new page if this controller/action does not have one yet.
-            await _mediator.SendAsync(new Page.CreateWhenNonexistent.Command
-            {
-                Primary = context.Controller.ToString(),
-                Secondary = context.ActionDescriptor.ToString(),
-                Tertiary = ""
-            });
+            var primary = context.ActionDescriptor.RouteValues["controller"];
+            var secondary = context.ActionDescriptor.RouteValues["action"];
 
-            var page = await _mediator.SendAsync(new Page.Load.Query
+            // Create a new page if this controller/action does not have one yet.
+            //await _mediator.SendAsync(new Page.CreateWhenNonexistent.Command
+            //{
+            //    Primary = primary,
+            //    Secondary = secondary,
+            //    Tertiary = ""
+            //});
+
+            //var page = await _mediator.SendAsync(new Page.Load.Query
+            //{
+            //    Primary = primary,
+            //    Secondary = secondary,
+            //    Tertiary = ""
+            //});
+            var page = new Page.Load.Result
             {
-                Primary = context.Controller.ToString(),
-                Secondary = context.ActionDescriptor.ToString(),
-                Tertiary = ""
-            });
+                Primary = primary,
+                Secondary = secondary,
+                Tertiary = "",
+                Slots = new List<Page.Load.Slot>()
+            };
 
             var controller = context.Controller as Controller;
             if (controller != null)

@@ -23,6 +23,7 @@ namespace SeamsCore.Infrastructure
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.RemovePluralizingTableNameConvention();
+            base.OnModelCreating(modelBuilder);
         }
 
         public void BeginTransaction()
