@@ -6,6 +6,6 @@
     "jquery": "2.2.0",
     "jquery-validation": "1.14.0",
     "jquery-validation-unobtrusive": "3.2.6",
-    "quill": "1.1.5"
+    "summernote": "0.8.2"
   }
 }
