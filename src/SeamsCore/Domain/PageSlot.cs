@@ -28,7 +28,13 @@ namespace SeamsCore.Domain
         [NotMapped]
         public PageSlotHtml LatestVersion
         {
-            get { return Versions.Last(); }
+            get { return Versions?.Last(); }
+        }
+
+        [NotMapped]
+        public string Html
+        {
+            get { return LatestVersion != null ? LatestVersion.Html : "";  }
         }
 
         public void UpdateHtml(string html)

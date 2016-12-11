@@ -15,12 +15,7 @@
     {
         public class Command : IAsyncRequest
         {
-            public Command()
-            {
-                ModifiedSlots = new List<ModifiedSlot>();
-            }
-
-            public List<ModifiedSlot> ModifiedSlots { get; private set; }
+            public List<ModifiedSlot> ModifiedSlots { get; set; }
 
             public class ModifiedSlot
             {
@@ -32,13 +27,13 @@
             }
         }
 
-        public class CommandValidator : AbstractValidator<Command>
-        {
-            public CommandValidator()
-            {
-                RuleFor(m => m.ModifiedSlots).NotEmpty().Must(m => !m.Any(s => string.IsNullOrEmpty(s.Primary)));
-            }
-        }
+        //public class CommandValidator : AbstractValidator<Command>
+        //{
+        //    public CommandValidator()
+        //    {
+        //        RuleFor(m => m.ModifiedSlots).NotEmpty().Must(m => !m.Any(s => string.IsNullOrEmpty(s.Primary)));
+        //    }
+        //}
 
         public class Handler : AsyncRequestHandler<Command>
         {
@@ -51,19 +46,24 @@
 
             protected override async Task HandleCore(Command message)
             {
-                var page = await _db.Pages.FirstOrDefaultAsync(p =>
-                    p.Primary == message.ModifiedSlots.First().Primary &&
-                    p.Secondary == message.ModifiedSlots.First().Secondary &&
-                    p.Tertiary == message.ModifiedSlots.First().Tertiary);
+                var page = await _db.Pages
+                        .Include(p => p.Slots)
+                        .FirstOrDefaultAsync(p =>
+                            p.Primary == message.ModifiedSlots.First().Primary &&
+                            p.Secondary == message.ModifiedSlots.First().Secondary &&
+                            p.Tertiary == message.ModifiedSlots.First().Tertiary);
 
                 PageSlot slot;
 
                 foreach (var modifiedSlot in message.ModifiedSlots)
                 {
-                    slot = await _db.PageSlots.FirstOrDefaultAsync(s => s.PageId == page.Id && s.SeaId == modifiedSlot.SeaId);
+                    slot = await _db.PageSlots
+                        .Include(s => s.Versions)
+                        .FirstOrDefaultAsync(s => s.PageId == page.Id && s.SeaId == modifiedSlot.SeaId);
                     if (slot == null)
                     {
                         slot = new PageSlot();
+                        slot.SeaId = modifiedSlot.SeaId;
                         slot.Versions = new List<PageSlotHtml>();
                         page.Slots.Add(slot);
                     }

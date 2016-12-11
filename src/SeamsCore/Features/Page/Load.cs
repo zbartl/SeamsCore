@@ -25,7 +25,7 @@ namespace SeamsCore.Features.Page
             public string Tertiary { get; set; }
             public string Title { get; set; }
             public int Columns { get; set; }
-            public List<Slot> Slots { get; set; }
+            public List<Slot> Slots { get; set; } = new List<Slot>();
         }
 
         public class Slot
@@ -46,10 +46,13 @@ namespace SeamsCore.Features.Page
 
             public async Task<Result> Handle(Query message)
             {
-                var page = await _db.Pages.FirstOrDefaultAsync(p =>
-                    p.Primary == message.Primary &&
-                    p.Secondary == message.Secondary &&
-                    p.Tertiary == message.Tertiary);
+                var page = await _db.Pages
+                    .Include(p => p.Slots)
+                    .ThenInclude(s => s.Versions)
+                    .FirstOrDefaultAsync(p =>
+                        p.Primary == message.Primary &&
+                        p.Secondary == message.Secondary &&
+                        p.Tertiary == message.Tertiary);
 
                 return Mapper.Map<Result>(page);
             }

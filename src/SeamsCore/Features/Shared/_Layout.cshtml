@@ -64,15 +64,17 @@
         <script src="~/js/site.min.js" asp-append-version="true"></script>
     </environment>
 
-    @RenderSection("scripts", required: false)
-
     <script>
         $(function () {
+            window.primary = '@ViewContext.RouteData.Values["controller"]';
+            window.secondary = '@ViewContext.RouteData.Values["action"]';
+            window.tertiary = '';
             if (typeof @(ViewContext.RouteData.Values["controller"]).@(ViewContext.RouteData.Values["action"]) !== 'undefined') {
                 @(ViewContext.RouteData.Values["controller"]).@(ViewContext.RouteData.Values["action"]).init();
             }
         });
     </script>
+    @RenderSection("scripts", required: false)
 </body>
 
 </html>

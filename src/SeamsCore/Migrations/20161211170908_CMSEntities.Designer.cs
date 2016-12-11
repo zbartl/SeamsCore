@@ -8,9 +8,10 @@ using SeamsCore.Infrastructure;
 namespace SeamsCore.Migrations
 {
     [DbContext(typeof(SeamsContext))]
-    partial class SeamsContextModelSnapshot : ModelSnapshot
+    [Migration("20161211170908_CMSEntities")]
+    partial class CMSEntities
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.0.1")

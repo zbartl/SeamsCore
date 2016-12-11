@@ -24,7 +24,7 @@ namespace SeamsCore.Features.Page
 
         [Route("save")]
         [HttpPost]
-        public async Task<JsonResult> Save(Save.Command command)
+        public async Task<JsonResult> Save([FromBody] Save.Command command)
         {
             try
             {
