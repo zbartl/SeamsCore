@@ -9,6 +9,9 @@
         {
             CreateMap<PageSlot, Load.Slot>();
             CreateMap<Page, Load.Result>();
+            CreateMap<Page, List.PrimaryPage>();
+            CreateMap<Page, List.SecondaryPage>();
+            CreateMap<Page, List.TertiaryPage>();
         }
     }
 }

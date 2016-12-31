@@ -27,13 +27,13 @@
             }
         }
 
-        //public class CommandValidator : AbstractValidator<Command>
-        //{
-        //    public CommandValidator()
-        //    {
-        //        RuleFor(m => m.ModifiedSlots).NotEmpty().Must(m => !m.Any(s => string.IsNullOrEmpty(s.Primary)));
-        //    }
-        //}
+        public class CommandValidator : AbstractValidator<Command>
+        {
+            public CommandValidator()
+            {
+                RuleFor(m => m.ModifiedSlots).NotEmpty().Must(m => !m.Any(s => string.IsNullOrEmpty(s.Primary)));
+            }
+        }
 
         public class Handler : AsyncRequestHandler<Command>
         {

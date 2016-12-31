@@ -6,6 +6,7 @@
     "jquery": "2.2.0",
     "jquery-validation": "1.14.0",
     "jquery-validation-unobtrusive": "3.2.6",
-    "summernote": "0.8.2"
+    "summernote": "0.8.2",
+    "dragula": "3.7.2"
   }
 }

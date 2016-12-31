@@ -12,7 +12,8 @@
     "outputFileName": "wwwroot/js/site.min.js",
     "inputFiles": [
       "Features/Home/Index.js",
-      "Features/Page/Load.js"
+      "Features/Page/Load.js",
+      "Features/Page/List.js"
     ],
     // Optionally specify minification options
     "minify": {

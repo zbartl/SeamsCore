@@ -40,5 +40,12 @@ namespace SeamsCore.Features.Page
             return Json(result);
         }
 
+        [Route("list")]
+        public async Task<IActionResult> List()
+        {
+            var pages = await _mediator.SendAsync(new List.Query());
+            return View(pages);
+        }
+
     }
 }
