@@ -9,6 +9,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace SeamsCore.Features.Page
 {
+    /// <summary>
+    /// Defines the Query, Result and Handler for loading an individual Page and all of its content (Slots).
+    /// </summary>
     public class Load
     {
         public class Query : IAsyncRequest<Result>
@@ -44,6 +47,11 @@ namespace SeamsCore.Features.Page
                 _db = db;
             }
 
+            /// <summary>
+            /// Retrives the specified Page and it's html content from the database for display and CMS purposes.
+            /// </summary>
+            /// <param name="message">The query.</param>
+            /// <returns>A Page and all of its content as Slots.</returns>
             public async Task<Result> Handle(Query message)
             {
                 var page = await _db.Pages

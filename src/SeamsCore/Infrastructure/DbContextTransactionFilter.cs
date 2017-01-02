@@ -3,6 +3,9 @@ using Microsoft.AspNetCore.Mvc.Filters;
 
 namespace SeamsCore.Infrastructure
 {
+    /// <summary>
+    /// Action Filter executed on each request that wraps request in an Entity Framework transaction.
+    /// </summary>
     public class DbContextTransactionFilter : IActionFilter
     {
         private readonly SeamsContext _dbContext;

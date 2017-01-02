@@ -11,6 +11,9 @@ using Microsoft.AspNetCore.Identity;
 
 namespace SeamsCore.Features.PageSettings
 {
+    /// <summary>
+    /// Defines the Command and Handler for updating a Page's non html content settings.
+    /// </summary>
     public class Save
     {
         public class Command : IAsyncRequest
@@ -33,6 +36,11 @@ namespace SeamsCore.Features.PageSettings
                 _db = db;
             }
 
+            /// <summary>
+            /// Retrieves the Page from the database and calls the subsequent Page methods to update the non html settings.
+            /// </summary>
+            /// <param name="message">The command.</param>
+            /// <returns>A task</returns>
             protected override async Task HandleCore(Command message)
             {
                 var page = await _db.Pages.FirstOrDefaultAsync(p =>

@@ -44,6 +44,10 @@ namespace SeamsCore.Domain
         [ForeignKey("TemplateId")]
         public virtual PageTemplate Template { get; set; }
 
+        /// <summary>
+        /// Updates the specified non html Page settings.
+        /// </summary>
+        /// <param name="message">The command containing the updated Page settings.</param>
         public void Handle(Features.PageSettings.Save.Command message)
         {
             IsInNavigation = message.IsInNavigation;

@@ -5,6 +5,9 @@ using System.Linq;
 
 namespace SeamsCore.Infrastructure
 {
+    /// <summary>
+    /// Exctends Controllers with a feature property to define the Feature folder it is contained within.
+    /// </summary>
     public class FeatureConvention : IControllerModelConvention
     {
         public void Apply(ControllerModel controller)

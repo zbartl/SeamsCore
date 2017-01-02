@@ -11,6 +11,9 @@ using Microsoft.AspNetCore.Identity;
 
 namespace SeamsCore.Features.PageSettings
 {
+    /// <summary>
+    /// Defines the Query, Result and Handler for retrieving the non-html content of a Page.
+    /// </summary>
     public class Load
     {
         public class Query : IAsyncRequest<Result>
@@ -40,6 +43,11 @@ namespace SeamsCore.Features.PageSettings
                 _db = db;
             }
 
+            /// <summary>
+            /// Retrieves the non html content settings of a Page, such as Title or Redirect.
+            /// </summary>
+            /// <param name="message">The query.</param>
+            /// <returns>A task with Result defining the non html content settings of a Page.</returns>
             public async Task<Result> Handle(Query message)
             {
                 var page = await _db.Pages.FirstOrDefaultAsync(p =>

@@ -11,6 +11,9 @@
     using SeamsCore.Domain;
     using FluentValidation;
 
+    /// <summary>
+    /// Defines the Command, Validation and Handler for saving a user edited Page's html content.
+    /// </summary>
     public class Save
     {
         public class Command : IAsyncRequest
@@ -44,6 +47,11 @@
                 _db = db;
             }
 
+            /// <summary>
+            /// Retrieves the edited Page from the database, adds new Slots and updates html content.
+            /// </summary>
+            /// <param name="message">The command.</param>
+            /// <returns>A task.</returns>
             protected override async Task HandleCore(Command message)
             {
                 var page = await _db.Pages

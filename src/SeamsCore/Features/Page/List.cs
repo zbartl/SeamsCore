@@ -9,6 +9,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace SeamsCore.Features.Page
 {
+    /// <summary>
+    /// Defines the Query, Result and Handler for Retrieving an organized list of Pages.
+    /// </summary>
     public class List
     {
         public class Query : IAsyncRequest<Result>
@@ -51,6 +54,11 @@ namespace SeamsCore.Features.Page
                 _db = db;
             }
 
+            /// <summary>
+            /// Retrieves all pages from database and organizes them into ordered, nested lists of primary, secondary and tertiary pages.
+            /// </summary>
+            /// <param name="message">The query.</param>
+            /// <returns>A task whose result contains the ordered, nested list of pages.</returns>
             public async Task<Result> Handle(Query message)
             {
                 var pages = await _db.Pages.ToListAsync();

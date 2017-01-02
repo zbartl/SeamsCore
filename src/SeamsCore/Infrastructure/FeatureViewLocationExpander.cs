@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace SeamsCore.Infrastructure
 {
+    /// <summary>
+    /// Extends the default MVC view location logic to look in /Features folders for View files.
+    /// </summary>
     public class FeatureViewLocationExpander : IViewLocationExpander
     {
         public void PopulateValues(ViewLocationExpanderContext context) { }

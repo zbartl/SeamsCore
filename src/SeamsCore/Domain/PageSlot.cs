@@ -37,6 +37,10 @@ namespace SeamsCore.Domain
             get { return LatestVersion != null ? LatestVersion.Html : "";  }
         }
 
+        /// <summary>
+        /// Updates the HTML for this Page Slot.
+        /// </summary>
+        /// <param name="html">The user created HTML string produced by the CMS.</param>
         public void UpdateHtml(string html)
         {
             Versions.Add(new PageSlotHtml
