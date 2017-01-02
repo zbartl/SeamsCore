@@ -15,9 +15,9 @@ Page.List = {
             }
         }).on('drop', function (el, container) {
             var data = [];
-            $(container).find(".mvseams_manage_folder[data-container-id]").each(function () {
+            $(container).find(".mvseams_manage_folder[data-page-id]").each(function () {
                 data.push(
-                    { id: $(this).data("container-id"), type: $(this).data("container-type") }
+                    { id: $(this).data("page-id"), type: $(this).data("container-type") }
                 );
             });
             $.ajax({
@@ -44,9 +44,9 @@ Page.List = {
                 }
             }).on('drop', function (el, container, source) {
                 var data = [];
-                $(container).find(".mvseams_manage_page[data-container-id]").each(function () {
+                $(container).find(".mvseams_manage_page[data-page-id]").each(function () {
                     data.push(
-                        { id: $(this).data("container-id"), type: $(this).data("container-type") }
+                        { id: $(this).data("page-id"), type: $(this).data("container-type") }
                     );
                 });
                 $.ajax({
@@ -71,9 +71,9 @@ Page.List = {
                 }
             }).on('drop', function (el, container, source) {
                 var data = [];
-                $(container).find(".mvseams_manage_page[data-container-id]").each(function () {
+                $(container).find(".mvseams_manage_page[data-page-id]").each(function () {
                     data.push(
-                        { id: $(this).data("container-id"), type: $(this).data("container-type") }
+                        { id: $(this).data("page-id"), type: $(this).data("container-type") }
                     );
                 });
                 $.ajax({

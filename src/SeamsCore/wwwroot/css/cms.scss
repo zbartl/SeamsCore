@@ -223,47 +223,47 @@
     font-weight: bold;
 }
 
-.mvseams_manage_folders, 
-.mvseams_manage_pages {
+.mvseams_manage_primarys, 
+.mvseams_manage_secondarys {
 	padding-left: 0;
 }
 
-.mvseams_manage_folders,
-.mvseams_manage_folder > div {
+.mvseams_manage_primarys,
+.mvseams_manage_primary > div {
 	border-radius: 5px;
 	-moz-border-radius: 5px;
 	-webkit-border-radius: 5px;
 	-ms-border-radius: 5px;
 }
 
-.mvseams_manage_folders {
+.mvseams_manage_primarys {
 	border: 1px solid #828282;
 	padding-left: 0;
 }
 
-.mvseams_manage_folders li {
+.mvseams_manage_primarys li {
 	list-style: none;
 }
 
-.mvseams_manage_folder {
+.mvseams_manage_primary {
 	list-style: none;
 }
 
-.mvseams_manage_folder > div {
+.mvseams_manage_primary > div {
 	font-family: 'Ropa Sans', sans-serif;
 	padding: 10px;
 	background-color: #FAFAFA;
 	border-bottom: 1px solid rgba(#FAFAFA, .4);
 }
 
-.mvseams_manage_pages {
+.mvseams_manage_secondarys {
 }
 
-.mvseams_manage_page {
+.mvseams_manage_secondary {
 	list-style: none;
 }
 
-.mvseams_manage_page:first-child > div {
+.mvseams_manage_secondary:first-child > div {
 	background-image: -o-linear-gradient(-90deg, #D8D8D8 0%, #F1F1F1 11%);
 	background-image: -moz-linear-gradient(-90deg, #D8D8D8 0%, #F1F1F1 11%);
 	background-image: -webkit-linear-gradient(-90deg, #D8D8D8 0%, #F1F1F1 11%);
@@ -271,13 +271,21 @@
 	background-image: linear-gradient(-180deg, #D8D8D8 0%, #F1F1F1 11%);
 }
 
-.mvseams_manage_page > div {
+.mvseams_manage_secondary > div {
+	padding: 5px 10px 5px 30px;
+}
+
+.mvseams_manage_secondary > div,
+.mvseams_manage_tertiary > div {
 	font-family: 'Ropa Sans', sans-serif;
 	-webkit-box-shadow: inset 0px -1px 0px rgba(#000, .1), inset 0px -2px 0px rgba(white, .7);
 	-moz-box-shadow: inset 0px -1px 0px rgba(#000, .1), inset 0px -2px 0px rgba(white, .7);
 	box-shadow: inset 0px -1px 0px rgba(#000, .1), inset 0px -2px 0px rgba(white, .7);
-	padding: 5px 10px 5px 30px;
 	background-color: #F1F1F1;
+}
+
+.mvseams_manage_tertiary > div {
+	padding: 5px 10px 5px 60px;
 }
 
 .content {

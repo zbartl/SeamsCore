@@ -77,6 +77,7 @@ namespace SeamsCore.Features.Page
 
                     var secondaryPages = pages
                         .Where(p => p.Primary == primary.Primary)
+                        .Where(p => !string.IsNullOrWhiteSpace(p.Secondary))
                         .Where(p => p.Secondary != "Index" && p.Secondary != p.Primary)
                         .Where(p => string.IsNullOrWhiteSpace(p.Tertiary))
                         .OrderBy(p => p.Priority);

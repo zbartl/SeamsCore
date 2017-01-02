@@ -12,6 +12,7 @@
             CreateMap<Page, List.PrimaryPage>();
             CreateMap<Page, List.SecondaryPage>();
             CreateMap<Page, List.TertiaryPage>();
+            CreateMap<PageTemplate, Create.Template>();
         }
     }
 }

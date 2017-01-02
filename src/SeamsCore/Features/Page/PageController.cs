@@ -47,5 +47,20 @@ namespace SeamsCore.Features.Page
             return View(pages);
         }
 
+        [Route("create/{primary?}/{secondary?}/{tertiary?}")]
+        public async Task<IActionResult> Create(string primary = "", string secondary = "", string tertiary = "")
+        {
+            var templates = await _mediator.SendAsync(new Create.Query { Primary = primary, Secondary = secondary, Tertiary = tertiary });
+            return View(templates);
+        }
+
+        [HttpPost]
+        [Route("create/{primary?}/{secondary?}/{tertiary?}")]
+        public async Task<IActionResult> Create(Create.Command command)
+        {
+            await _mediator.SendAsync(command);
+
+            return RedirectToAction("List");
+        }
     }
 }

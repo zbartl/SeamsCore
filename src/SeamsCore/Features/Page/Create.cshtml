@@ -1,0 +1,75 @@
+﻿@model SeamsCore.Features.Page.Create.Result   
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<div class="mvseams_ui content">
+    <h2>New Page</h2>
+    <div class="panel-group mvseams_ui_page" id="page_create_accordion" role="tablist" aria-multiselectable="true">
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="pageFromTemplateHeading">
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" data-parent="#accordion" href="#pageFromTemplate" aria-expanded="true" aria-controls="pageFromTemplate">
+                        Create Page From Template
+                    </a>
+                </h4>
+            </div>
+            <div id="pageFromTemplate" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="pageFromTemplateHeading">
+                <div class="panel-body">
+                    @using (Html.BeginForm("Create", "Page"))
+                    {
+                        <div class="row bottom_margin_10">
+                            <div class="col-xs-3">
+                                <a class="btn btn-block mvseams_btn pull-right" href="/page/list">
+                                    <i class="fa fa-backward"></i> Cancel
+                                </a>
+                            </div>
+                            <div class="col-xs-6">
+                                <div class="mvseams_ui_page_desc">define the page name and layout of your content</div>
+                            </div>
+                            <div class="col-xs-3">
+                                <button type="submit" class="create_page_submit btn btn-block mvseams_btn btn_green">
+                                    <i class="fa fa-plus"></i> Save
+                                </button>
+                            </div>
+                        </div>
+                        <div class="mvseams_ui_segment bottom_margin_10">
+                            <div>
+                                <div class="mvseams_ui_segment_title">name</div>
+                                <div class="row">
+                                    <div class="col-xs-3">
+                                        <input name="Primary" class="form-control" value="@Model.Primary" placeholder="primary" />
+                                    </div>
+                                    @if (!string.IsNullOrEmpty(Model.Primary))
+                                    {
+                                        <div class="col-xs-1 page_create_slash">/</div>
+                                        <div class="col-xs-3">
+                                            <input name="Secondary" class="form-control" value="@Model.Secondary" placeholder="secondary" />
+                                        </div>
+                                    }
+                                    @if (!string.IsNullOrEmpty(Model.Secondary))
+                                    {
+                                        <div class="col-xs-1 page_create_slash">/</div>
+                                        <div class="col-xs-3">
+                                            <input name="Tertiary" class="form-control" value="@Model.Tertiary" placeholder="tertiary" />
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                            <div>
+                                <div class="mvseams_ui_segment_title">template</div>
+                                <select name="TemplateId" class="form-control">
+                                    @foreach (var template in Model.Templates)
+                                    {
+                                        <option value="@template.Id">@template.Name</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
