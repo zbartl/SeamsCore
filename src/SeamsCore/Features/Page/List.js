@@ -13,26 +13,7 @@ Page.List = {
                 }
                 return handle.parentElement.classList.contains("dragula-handle");
             }
-        }).on('drop', function (el, container) {
-            var data = [];
-            $(container).find(".mvseams_manage_folder[data-page-id]").each(function () {
-                data.push(
-                    { id: $(this).data("page-id"), type: $(this).data("container-type") }
-                );
-            });
-            $.ajax({
-                type: "POST",
-                url: "/admin/changeprimarypriority",
-                data: JSON.stringify(data),
-                contentType: "application/json; charset=utf-8",
-                success: function (d) {
-                    console.log(d);
-                },
-                error: function (xhr, textStatus, errorThrown) {
-                    console.log(xhr.responseText);
-                }
-            });
-        });
+        }).on('drop', Page.List.updatePriority);
 
         $(".secondary_draggable").each(function () {
             dragula([this], {
@@ -42,26 +23,7 @@ Page.List = {
                     }
                     return handle.parentElement.classList.contains("dragula-handle");
                 }
-            }).on('drop', function (el, container, source) {
-                var data = [];
-                $(container).find(".mvseams_manage_page[data-page-id]").each(function () {
-                    data.push(
-                        { id: $(this).data("page-id"), type: $(this).data("container-type") }
-                    );
-                });
-                $.ajax({
-                    type: "POST",
-                    url: "/admin/changesecondarypriority",
-                    data: JSON.stringify(data),
-                    contentType: "application/json; charset=utf-8",
-                    success: function (d) {
-                        console.log(d);
-                    },
-                    error: function (xhr, textStatus, errorThrown) {
-                        console.log(xhr.responseText);
-                    }
-                });
-            });;
+            }).on('drop', Page.List.updatePriority);
         });
 
         $(".tertiary_draggable").each(function () {
@@ -69,26 +31,26 @@ Page.List = {
                 moves: function (el, container, handle) {
                     return handle.parentElement.classList.contains("dragula-handle");
                 }
-            }).on('drop', function (el, container, source) {
-                var data = [];
-                $(container).find(".mvseams_manage_page[data-page-id]").each(function () {
-                    data.push(
-                        { id: $(this).data("page-id"), type: $(this).data("container-type") }
-                    );
-                });
-                $.ajax({
-                    type: "POST",
-                    url: "/admin/changesecondarypriority",
-                    data: JSON.stringify(data),
-                    contentType: "application/json; charset=utf-8",
-                    success: function (d) {
-                        console.log(d);
-                    },
-                    error: function (xhr, textStatus, errorThrown) {
-                        console.log(xhr.responseText);
-                    }
-                });
-            });;
+            }).on('drop', Page.List.updatePriority);
+        });
+    },
+
+    updatePriority: function (el, container, source) {
+        var data = { Ids: [] };
+        $(container).find(".manage_page[data-page-id]").each(function () {
+            data.Ids.push($(this).attr("data-page-id"));
+        });
+        $.ajax({
+            type: "POST",
+            url: "/page/update-priority",
+            data: JSON.stringify(data),
+            contentType: "application/json; charset=utf-8",
+            success: function (d) {
+                console.log(d);
+            },
+            error: function (xhr, textStatus, errorThrown) {
+                console.log(xhr.responseText);
+            }
         });
     }
 }

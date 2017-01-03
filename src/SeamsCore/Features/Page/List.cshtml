@@ -3,10 +3,10 @@
 @{
     ViewBag.Title = "Manage Pages";
 }
-<div class="mvseams_ui content">
+<div class="seams_ui content">
     <h2>Pages</h2>
 
-    <div class="mvseams_manage_primarys no_padding">
+    <div class="manage_primarys no_padding">
         <ul class="dragula-container no_padding no_margin" id="primary_draggable">
             @foreach (var primary in Model.PrimaryPages)
             {
@@ -15,7 +15,7 @@
                     ? "/" + primary.Primary
                     : Url.Action("Index", primary.Primary);
 
-                <li class="mvseams_manage_primary" data-page-id="@primary.Id">
+                <li class="manage_page manage_primary" data-page-id="@primary.Id">
                     <div>
                         <i class="fa fa-minus-square"></i> @primaryName
                         @if (primary.IsUserCreated)
@@ -25,7 +25,7 @@
                         <a href="@primaryLink"><i class="fa fa-link"></i></a>
                         <span class="dragula-handle dragula-handle-primary pull-right"><i class="fa fa-arrows"></i></span>
                     </div>
-                    <div class="mvseams_manage_secondarys no_padding">
+                    <div class="manage_secondarys no_padding">
                         <ul class="dragula-container no_padding secondary_draggable">
                             @foreach (var secondary in primary.SecondaryPages)
                             {
@@ -33,7 +33,7 @@
                                     ? "/" + primary.Primary + "/" + secondary.Secondary
                                     : Url.Action(secondary.Secondary, primary.Primary);
 
-                                <li class="mvseams_manage_secondary" data-page-id="@secondary.Id">
+                                <li class="manage_page manage_secondary" data-page-id="@secondary.Id">
                                     <div>
                                         @secondary.Secondary
                                         @if (secondary.IsUserCreated)
@@ -43,13 +43,13 @@
                                         <a href="@link"><i class="fa fa-link"></i></a>
                                         <span class="dragula-handle dragula-handle-secondary pull-right"><i class="fa fa-arrows"></i></span>
                                     </div>
-                                    <div class="mvseams_manage_tertiarys no_padding">
+                                    <div class="manage_tertiarys no_padding">
                                         <ul class="dragula-container no_padding tertiary_draggable">
                                             @foreach (var tertiary in secondary.TertiaryPages)
                                             {
                                                 var tertiaryLink = "/" + primary.Primary + "/" + secondary.Secondary + "/" + tertiary.Tertiary;
 
-                                                <li class="mvseams_manage_tertiary" data-page-id="@tertiary.Id">
+                                                <li class="manage_page manage_tertiary" data-page-id="@tertiary.Id">
                                                     <div>
                                                         @tertiary.Tertiary
                                                         <a onclick="return confirm('Are you sure you want to delete this page?')" href="@Url.Action("Delete", "Page", new { pageId = tertiary.Id })"><i class="fa fa-trash fa-red"></i></a>
@@ -60,9 +60,9 @@
                                             }
                                         </ul>
                                         <ul class="no_padding no_margin">
-                                            <li class="mvseams_manage_tertiary manage_actions">
+                                            <li class="manage_tertiary manage_actions">
                                                 <div>
-                                                    <a href="@Url.Action("Create", "Page", new { primary = primary.Primary, secondary = secondary.Secondary })" class="btn mvseams_btn_mini mvseams_manage_add_page" data-folder="@secondary">
+                                                    <a href="@Url.Action("Create", "Page", new { primary = primary.Primary, secondary = secondary.Secondary })" class="btn btn_mini manage_add_page" data-folder="@secondary">
                                                         <i class="fa fa-plus"></i> Add Tertiary Page
                                                     </a>
                                                 </div>
@@ -73,9 +73,9 @@
                             }
                         </ul>
                         <ul class="no_padding no_margin">
-                            <li class="mvseams_manage_secondary manage_actions">
+                            <li class="manage_secondary manage_actions">
                                 <div>
-                                    <a href="@Url.Action("Create", "Page", new { primary = primary.Primary })" class="btn mvseams_btn_mini mvseams_manage_add_page" data-folder="@primary">
+                                    <a href="@Url.Action("Create", "Page", new { primary = primary.Primary })" class="btn btn_mini manage_add_page" data-folder="@primary">
                                         <i class="fa fa-plus"></i> Add Secondary Page
                                     </a>
                                 </div>
@@ -86,13 +86,13 @@
             }
         </ul>
         <ul class="no_padding no_margin">
-            <li class="mvseams_manage_primary">
+            <li class="manage_primary">
                 <div>
-                    <a href="@Url.Action("Create", "Page")" class="btn mvseams_btn_mini mvseams_manage_add_page" data-folder="">
+                    <a href="@Url.Action("Create", "Page")" class="btn btn_mini manage_add_page" data-folder="">
                         <i class="fa fa-plus"></i> Add Primary Page
                     </a>
                     <div class="pull-right">
-                        <a href="@Url.Action("ManageTemplates", "Admin")" class="btn mvseams_btn_mini btn_green">
+                        <a href="@Url.Action("ManageTemplates", "Admin")" class="btn btn_mini btn_green">
                             <i class="fa fa-plus"></i> Edit Templates
                         </a>
                     </div>

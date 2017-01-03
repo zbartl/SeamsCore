@@ -5,7 +5,6 @@ using SeamsCore.Infrastructure.Exceptions;
 
 namespace SeamsCore.Features.Page
 {
-    [Route("page")]
     public class PageController : Controller
     {
         private readonly IMediator _mediator;
@@ -15,14 +14,18 @@ namespace SeamsCore.Features.Page
             _mediator = mediator;
         }
 
-        [Route("load/{Primary}/{Secondary?}/{Tertiary?}")]
         public async Task<IActionResult> Load(Load.Query query)
         {
             var model = await _mediator.SendAsync(query);
-            return View(model);
+            if (string.IsNullOrEmpty(model.TemplateView))
+            {
+                return View(model);
+            }
+
+            return View(model.TemplateView, model);
         }
 
-        [Route("save")]
+        [Route("page/save")]
         [HttpPost]
         public async Task<JsonResult> Save([FromBody] Save.Command command)
         {
@@ -40,14 +43,14 @@ namespace SeamsCore.Features.Page
             return Json(result);
         }
 
-        [Route("list")]
+        [Route("page/list")]
         public async Task<IActionResult> List()
         {
             var pages = await _mediator.SendAsync(new List.Query());
             return View(pages);
         }
 
-        [Route("create/{primary?}/{secondary?}/{tertiary?}")]
+        [Route("page/create/{primary?}/{secondary?}/{tertiary?}")]
         public async Task<IActionResult> Create(string primary = "", string secondary = "", string tertiary = "")
         {
             var templates = await _mediator.SendAsync(new Create.Query { Primary = primary, Secondary = secondary, Tertiary = tertiary });
@@ -55,12 +58,21 @@ namespace SeamsCore.Features.Page
         }
 
         [HttpPost]
-        [Route("create/{primary?}/{secondary?}/{tertiary?}")]
+        [Route("page/create/{primary?}/{secondary?}/{tertiary?}")]
         public async Task<IActionResult> Create(Create.Command command)
         {
             await _mediator.SendAsync(command);
 
             return RedirectToAction("List");
+        }
+
+        [HttpPost]
+        [Route("page/update-priority")]
+        public async Task<IActionResult> UpdatePriority([FromBody] UpdatePriority.Command command)
+        {
+            await _mediator.SendAsync(command);
+
+            return Json("success");
         }
     }
 }

@@ -79,11 +79,26 @@ namespace SeamsCore.Features.Page
 
             public async Task<Unit> Handle(Command message)
             {
+                var nextPriority = 0;
+                if (!string.IsNullOrEmpty(message.Tertiary))
+                {
+                    nextPriority = await _db.Pages.CountAsync(p => p.Primary == message.Primary && p.Secondary == message.Secondary) - 1;
+                }
+                else if (!string.IsNullOrEmpty(message.Secondary))
+                {
+                    nextPriority = await _db.Pages.CountAsync(p => p.Primary == message.Primary) - 1;
+                }
+                else
+                {
+                    nextPriority = await _db.Pages.CountAsync() - 1;
+                }
+
                 _db.Pages.Add(new Page
                 {
                     Primary = message.Primary,
                     Secondary = message.Secondary,
                     Tertiary = message.Tertiary,
+                    Priority = nextPriority,
                     Columns = 0,
                     TemplateId = message.TemplateId,
                     IsInNavigation = false,

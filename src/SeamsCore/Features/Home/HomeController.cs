@@ -19,6 +19,7 @@ namespace SeamsCore.Features.Home
             _mediator = mediator;
         }
 
+        [Route("~/")]
         [ServiceFilter(typeof(SeamsVisible))]
         public async Task<IActionResult> Index()
         {
