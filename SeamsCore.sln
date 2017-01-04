@@ -14,7 +14,7 @@ Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "SeamsCore", "src\SeamsCore\
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{89F33B9F-0BD0-43B3-9A27-B247614DDE26}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "SeamsCore.UnitTests", "SeamsCore.UnitTests\SeamsCore.UnitTests.xproj", "{1AE834C0-2B59-432A-8396-5088D81C6F7F}"
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "SeamsCore.UnitTests", "test\SeamsCore.UnitTests\SeamsCore.UnitTests.xproj", "{1AE834C0-2B59-432A-8396-5088D81C6F7F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
