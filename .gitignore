@@ -8,5 +8,6 @@
 /src/SeamsCore/bin
 /src/SeamsCore/obj
 /src/SeamsCore/wwwroot/lib
+/src/SeamsCore/appsettings.json
 /test/SeamsCore.UnitTests/obj/Debug
 /test/SeamsCore.UnitTests/bin/Debug
