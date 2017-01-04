@@ -11,6 +11,9 @@ namespace SeamsCore.Features.Page
 {
     using Domain;
 
+    /// <summary>
+    /// Defines the Command and Handler for creating a Page when none exists for the specified routing.
+    /// </summary>
     public class CreateWhenNonexistent
     {
         public class Command : IAsyncRequest<Unit>
@@ -29,6 +32,11 @@ namespace SeamsCore.Features.Page
                 _db = db;
             }
 
+            /// <summary>
+            /// Determines whether the specified routing already defines a Page and if not creates an empty one.
+            /// </summary>
+            /// <param name="message">The command containing the routing for this Page.</param>
+            /// <returns></returns>
             public async Task<Unit> Handle(Command message)
             {
                 var page = await _db.Pages.FirstOrDefaultAsync(p =>

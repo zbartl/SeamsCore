@@ -1,0 +1,35 @@
+﻿{
+  "version": "1.0.0",
+
+  "buildOptions": {
+    "debugType": "portable",
+    "copyToOutput": {
+      "include": [ "appsettings.json" ]
+    }
+  },
+
+  "dependencies": {
+    "Microsoft.NETCore.App": {
+      "type": "platform",
+      "version": "1.0.1"
+    },
+    "Microsoft.EntityFrameworkCore.InMemory": "1.0.1",
+    "Microsoft.AspNetCore.TestHost": "1.0.1",
+    "xunit": "2.1.0",
+    "dotnet-test-xunit": "2.2.0-preview2-build1029",
+    "Shouldly": "2.8.2",
+    "FakeItEasy": "3.0.0-beta002-build000066",
+    "SeamsCore": { "target": "project" }
+  },
+
+  "testRunner": "xunit",
+
+  "frameworks": {
+    "netcoreapp1.0": {
+      "imports": [
+        "dotnet5.6",
+        "portable-net45+win8"
+      ]
+    }
+  },
+}

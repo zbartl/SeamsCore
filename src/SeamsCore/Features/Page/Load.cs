@@ -65,10 +65,6 @@ namespace SeamsCore.Features.Page
                         p.Tertiary == message.Tertiary);
 
                 var result = Mapper.Map<Result>(page);
-                if (page.Template != null)
-                {
-                    result.TemplateView = page.Template.View;
-                }
                 return result;
             }
         }

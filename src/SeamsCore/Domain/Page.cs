@@ -44,6 +44,15 @@ namespace SeamsCore.Domain
         [ForeignKey("TemplateId")]
         public virtual PageTemplate Template { get; set; }
 
+        [NotMapped]
+        public string TemplateView
+        {
+            get
+            {
+                return Template?.View;
+            }
+        }
+
         /// <summary>
         /// Updates the specified non html Page settings.
         /// </summary>

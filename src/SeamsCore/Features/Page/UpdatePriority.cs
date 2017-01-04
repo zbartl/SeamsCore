@@ -38,6 +38,11 @@
                 _db = db;
             }
 
+            /// <summary>
+            /// Updates each affected Page with a new priority based on the user altered ordering.
+            /// </summary>
+            /// <param name="message">The command.</param>
+            /// <returns></returns>
             public async Task<Unit> Handle(Command message)
             {
                 var i = 0;
