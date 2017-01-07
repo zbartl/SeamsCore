@@ -53,8 +53,8 @@ namespace SeamsCore.Features.Page
         [Route("page/create/{primary?}/{secondary?}/{tertiary?}")]
         public async Task<IActionResult> Create(string primary = "", string secondary = "", string tertiary = "")
         {
-            var templates = await _mediator.SendAsync(new Create.Query { Primary = primary, Secondary = secondary, Tertiary = tertiary });
-            return View(templates);
+            var command = await _mediator.SendAsync(new Create.Query { Primary = primary, Secondary = secondary, Tertiary = tertiary });
+            return View(command);
         }
 
         [HttpPost]

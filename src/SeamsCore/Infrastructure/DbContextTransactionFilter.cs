@@ -1,12 +1,13 @@
 ﻿using System;
 using Microsoft.AspNetCore.Mvc.Filters;
+using System.Threading.Tasks;
 
 namespace SeamsCore.Infrastructure
 {
     /// <summary>
     /// Action Filter executed on each request that wraps request in an Entity Framework transaction.
     /// </summary>
-    public class DbContextTransactionFilter : IActionFilter
+    public class DbContextTransactionFilter : IAsyncActionFilter
     {
         private readonly SeamsContext _dbContext;
 
@@ -15,27 +16,19 @@ namespace SeamsCore.Infrastructure
             _dbContext = dbContext;
         }
 
-        public void OnActionExecuting(ActionExecutingContext context)
+        public async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
         {
-            _dbContext.BeginTransaction();
-        }
-
-        public void OnActionExecuted(ActionExecutedContext context)
-        {
-            if (context.Exception != null)
-            {
-                _dbContext.CloseTransaction(context.Exception);
-                return;
-            }
-
             try
             {
-                _dbContext.CloseTransaction();
-            }
-            catch (Exception ex)
-            {
-                _dbContext.CloseTransaction(ex);
+                _dbContext.BeginTransaction();
 
+                await next();
+
+                await _dbContext.CommitTransactionAsync();
+            }
+            catch (Exception)
+            {
+                _dbContext.RollbackTransaction();
                 throw;
             }
         }

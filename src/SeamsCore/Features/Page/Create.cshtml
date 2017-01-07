@@ -1,4 +1,4 @@
-﻿@model SeamsCore.Features.Page.Create.Result   
+﻿@model SeamsCore.Features.Page.Create.Command
 
 @{
     ViewBag.Title = "Create";
@@ -60,7 +60,7 @@
                             <div>
                                 <div class="mvseams_ui_segment_title">template</div>
                                 <select name="TemplateId" class="form-control">
-                                    @foreach (var template in Model.Templates)
+                                    @foreach (var template in Model.AvailableTemplates)
                                     {
                                         <option value="@template.Id">@template.Name</option>
                                     }

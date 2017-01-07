@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore.Storage;
 using System.Data;
 using SeamsCore.Domain;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using System.Threading.Tasks;
 
 namespace SeamsCore.Infrastructure
 {
@@ -36,32 +37,17 @@ namespace SeamsCore.Infrastructure
             _currentTransaction = Database.BeginTransaction(IsolationLevel.ReadCommitted);
         }
 
-        public void CloseTransaction()
-        {
-            CloseTransaction(exception: null);
-        }
-
-        public void CloseTransaction(Exception exception)
+        public async Task CommitTransactionAsync()
         {
             try
             {
-                if (_currentTransaction != null && exception != null)
-                {
-                    _currentTransaction.Rollback();
-                    return;
-                }
-
-                SaveChanges();
+                await SaveChangesAsync();
 
                 _currentTransaction?.Commit();
             }
-            catch (Exception)
+            catch
             {
-                if (_currentTransaction?.GetDbTransaction().Connection != null)
-                {
-                    _currentTransaction.Rollback();
-                }
-
+                RollbackTransaction();
                 throw;
             }
             finally
@@ -74,5 +60,20 @@ namespace SeamsCore.Infrastructure
             }
         }
 
+        public void RollbackTransaction()
+        {
+            try
+            {
+                _currentTransaction?.Rollback();
+            }
+            finally
+            {
+                if (_currentTransaction != null)
+                {
+                    _currentTransaction.Dispose();
+                    _currentTransaction = null;
+                }
+            }
+        }
     }
 }

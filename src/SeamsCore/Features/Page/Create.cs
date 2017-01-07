@@ -17,19 +17,20 @@ namespace SeamsCore.Features.Page
     /// </summary>
     public class Create
     {
-        public class Query : IAsyncRequest<Result>
+        public class Query : IAsyncRequest<Command>
         {
             public string Primary { get; set; }
             public string Secondary { get; set; }
             public string Tertiary { get; set; }
         }
 
-        public class Result
+        public class Command : IAsyncRequest<Unit>
         {
             public string Primary { get; set; }
             public string Secondary { get; set; }
             public string Tertiary { get; set; }
-            public List<Template> Templates { get; set; } = new List<Template>();
+            public List<Template> AvailableTemplates { get; set; } = new List<Template>();
+            public int TemplateId { get; set; }
         }
 
         public class Template
@@ -39,7 +40,7 @@ namespace SeamsCore.Features.Page
             public string View { get; set; }
         }
 
-        public class QueryHandler : IAsyncRequestHandler<Query, Result>
+        public class QueryHandler : IAsyncRequestHandler<Query, Command>
         {
             private readonly SeamsContext _db;
 
@@ -48,24 +49,16 @@ namespace SeamsCore.Features.Page
                 _db = db;
             }
 
-            public async Task<Result> Handle(Query message)
+            public async Task<Command> Handle(Query message)
             {
                 var templates = await _db.PageTemplates.ToListAsync();
-                var result = new Result();
+                var result = new Command();
                 result.Primary = message.Primary;
                 result.Secondary = message.Secondary;
                 result.Tertiary = message.Tertiary;
-                result.Templates = Mapper.Map<List<Template>>(templates);
+                result.AvailableTemplates = Mapper.Map<List<Template>>(templates);
                 return result;
             }
-        }
-
-        public class Command : IAsyncRequest<Unit>
-        {
-            public string Primary { get; set; }
-            public string Secondary { get; set; }
-            public string Tertiary { get; set; }
-            public int TemplateId { get; set; }
         }
 
         public class CommandHandler : IAsyncRequestHandler<Command, Unit>
