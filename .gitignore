@@ -9,5 +9,6 @@
 /src/SeamsCore/obj
 /src/SeamsCore/wwwroot/lib
 /src/SeamsCore/appsettings.json
+/src/SeamsCore/bower_components
 /test/SeamsCore.UnitTests/obj/Debug
 /test/SeamsCore.UnitTests/bin/Debug
