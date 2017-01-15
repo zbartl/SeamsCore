@@ -27,6 +27,13 @@ namespace SeamsCore.Features.Home
             return View(page);
         }
 
+        [Route("home/test")]
+        public async Task<IActionResult> Test()
+        {
+            var data = await _mediator.SendAsync(new Test.Query { Divisor = 0 });
+            return View();
+        }
+
         public IActionResult Error()
         {
             return View();

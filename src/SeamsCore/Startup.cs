@@ -88,6 +88,7 @@ namespace SeamsCore
             services.AddMediatR(typeof(Startup));
             services.AddDbContext<SeamsContext>(options => options.UseSqlServer(Configuration["Data:DefaultConnection:ConnectionString"]));
             services.AddHtmlTags(new TagConventions());
+            services.AddLogging();
 
             return ConfigureIoC(services);
         }
@@ -106,8 +107,14 @@ namespace SeamsCore
                     //_.ConnectImplementationsToTypesClosing(typeof(IValidator<>));
                 });
 
+                config.For(typeof(ILogger<>)).Use(typeof(Logger<>));
+
                 //config.For(typeof(IValidator<>)).Add(typeof(DefaultValidator<>));
-                config.For(typeof(IRequestHandler<,>)).DecorateAllWith(typeof(MediatorPipeline<,>));
+                var handlerType = config.For(typeof(IRequestHandler<,>));
+                handlerType.DecorateAllWith(typeof(MediatorPipeline<,>));
+
+                var asyncHandlerType = config.For(typeof(IAsyncRequestHandler<,>));
+                asyncHandlerType.DecorateAllWith(typeof(RetryHandler<,>));
 
                 //Populate the container using the service collection
                 config.Populate(services);
