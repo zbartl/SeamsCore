@@ -5,6 +5,7 @@
 *.lock.*
 
 /.vs
+/src/SeamsCore/dist
 /src/SeamsCore/bin
 /src/SeamsCore/obj
 /src/SeamsCore/wwwroot/lib
@@ -12,3 +13,5 @@
 /src/SeamsCore/bower_components
 /test/SeamsCore.UnitTests/obj/Debug
 /test/SeamsCore.UnitTests/bin/Debug
+/test/SeamsCore.UnitTests/obj/Release
+/test/SeamsCore.UnitTests/bin/Release

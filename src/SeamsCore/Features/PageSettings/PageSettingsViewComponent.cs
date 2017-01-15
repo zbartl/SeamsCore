@@ -16,7 +16,7 @@ namespace SeamsCore.Features.PageSettings
             _mediator = mediator;
         }
 
-        public async Task<IViewComponentResult> Load(Load.Query query)
+        public async Task<IViewComponentResult> InvokeAsync(Load.Query query)
         {
             var model = await _mediator.SendAsync(query);
             return View(model);

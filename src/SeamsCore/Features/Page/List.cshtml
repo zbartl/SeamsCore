@@ -3,10 +3,12 @@
 @{
     ViewBag.Title = "Manage Pages";
 }
-<div class="seams_ui content">
-    <h2>Pages</h2>
-
-    <div class="manage_primarys no_padding">
+<div class="seams_ui content widget-box">
+    <div class="widget-header">
+        <span class="widget-icon"><i class="fa fa-pagelines"></i></span>
+        <span class="widget-title">Pages</span>
+    </div>
+    <div class="widget-content manage_primarys">
         <ul class="dragula-container no_padding no_margin" id="primary_draggable">
             @foreach (var primary in Model.PrimaryPages)
             {
@@ -16,8 +18,8 @@
                     : Url.Action("Index", primary.Primary);
 
                 <li class="manage_page manage_primary" data-page-id="@primary.Id">
-                    <div>
-                        <i class="fa fa-minus-square"></i> @primaryName
+                    <div class="widget-level-1">
+                        @primaryName
                         @if (primary.IsUserCreated)
                         {
                             <a onclick="return confirm('Are you sure you want to delete this page?')" href="@Url.Action("Delete", "Admin", new { pageId = primary.Id })"><i class="fa fa-trash fa-red"></i></a>
@@ -34,7 +36,7 @@
                                     : Url.Action(secondary.Secondary, primary.Primary);
 
                                 <li class="manage_page manage_secondary" data-page-id="@secondary.Id">
-                                    <div>
+                                    <div class="widget-level-2">
                                         @secondary.Secondary
                                         @if (secondary.IsUserCreated)
                                         {
@@ -50,7 +52,7 @@
                                                 var tertiaryLink = "/" + primary.Primary + "/" + secondary.Secondary + "/" + tertiary.Tertiary;
 
                                                 <li class="manage_page manage_tertiary" data-page-id="@tertiary.Id">
-                                                    <div>
+                                                    <div class="widget-level-3">
                                                         @tertiary.Tertiary
                                                         <a onclick="return confirm('Are you sure you want to delete this page?')" href="@Url.Action("Delete", "Page", new { pageId = tertiary.Id })"><i class="fa fa-trash fa-red"></i></a>
                                                         <a href="@tertiaryLink"><i class="fa fa-link"></i></a>
@@ -61,7 +63,7 @@
                                         </ul>
                                         <ul class="no_padding no_margin">
                                             <li class="manage_tertiary manage_actions">
-                                                <div>
+                                                <div class="widget-level-3">
                                                     <a href="@Url.Action("Create", "Page", new { primary = primary.Primary, secondary = secondary.Secondary })" class="btn btn_mini manage_add_page" data-folder="@secondary">
                                                         <i class="fa fa-plus"></i> Add Tertiary Page
                                                     </a>
@@ -74,7 +76,7 @@
                         </ul>
                         <ul class="no_padding no_margin">
                             <li class="manage_secondary manage_actions">
-                                <div>
+                                <div class="widget-level-2">
                                     <a href="@Url.Action("Create", "Page", new { primary = primary.Primary })" class="btn btn_mini manage_add_page" data-folder="@primary">
                                         <i class="fa fa-plus"></i> Add Secondary Page
                                     </a>
@@ -87,7 +89,7 @@
         </ul>
         <ul class="no_padding no_margin">
             <li class="manage_primary">
-                <div>
+                <div class="widget-level-1">
                     <a href="@Url.Action("Create", "Page")" class="btn btn_mini manage_add_page" data-folder="">
                         <i class="fa fa-plus"></i> Add Primary Page
                     </a>
