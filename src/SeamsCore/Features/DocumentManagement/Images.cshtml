@@ -1,0 +1,13 @@
+﻿@model SeamsCore.Features.DocumentManagement.LoadImages.Result
+
+<br/>
+@foreach(var file in Model.Files)
+{
+    <p>@file</p>
+}
+<br/>
+@foreach(var dir in Model.Directories)
+{
+    <p>@dir</p>
+}
+<br/>

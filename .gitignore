@@ -1,14 +1,15 @@
 *.suo
 *.user
-*.bowerrc
 *.min.*
 *.lock.*
+*.*~
 
 /.vs
 /src/SeamsCore/dist
 /src/SeamsCore/bin
 /src/SeamsCore/obj
 /src/SeamsCore/wwwroot/lib
+/src/SeamsCore/wwwroot/uploads
 /src/SeamsCore/appsettings.json
 /src/SeamsCore/bower_components
 /test/SeamsCore.UnitTests/obj/Debug

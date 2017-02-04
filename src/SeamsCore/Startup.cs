@@ -90,6 +90,8 @@ namespace SeamsCore
             services.AddHtmlTags(new TagConventions());
             services.AddLogging();
 
+            services.Configure<AppSettings>(Configuration.GetSection("AppSettings"));
+
             return ConfigureIoC(services);
         }
 

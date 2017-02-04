@@ -68,7 +68,7 @@
   "publishOptions": {
     "include": [
       "wwwroot",
-      "**/*.cshtml",
+      "Features/**/*.cshtml",
       "hosting.json",
       "web.config"
     ]

@@ -11,5 +11,9 @@
     "DefaultConnection": {
       "ConnectionString": "Data Source=.;Initial Catalog=seamscore;User Id=User;Password=Password;"
     }
+  },
+  "AppSettings": {
+    "AllowedImageExtensions": ".jpg,.jpeg,.gif,.png",
+    "AllowedFileExtensions": ".pdf,.doc,.docx"
   }
 }
