@@ -14,7 +14,7 @@ namespace SeamsCore.Features.Page
     /// </summary>
     public class List
     {
-        public class Query : IAsyncRequest<Result>
+        public class Query : IRequest<Result>
         {
         }
 

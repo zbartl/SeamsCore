@@ -1,13 +1,72 @@
 ﻿@model SeamsCore.Features.DocumentManagement.LoadImages.Result
+@{ 
+    Layout = null;
+}
 
-<br/>
-@foreach(var file in Model.Files)
-{
-    <p>@file</p>
-}
-<br/>
-@foreach(var dir in Model.Directories)
-{
-    <p>@dir</p>
-}
-<br/>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-3 directory_management_area">
+            <h4>Image Management</h4>
+            <br/>
+            @foreach(var dir in Model.Directories)
+            {
+                <button class="btn btn-default btn-sm btn-block directory_select" data-dir="@dir">@dir</button>
+            }
+            @if (Model.Directories.Count == 0)
+            {
+                <button class="btn btn-default btn-sm btn-block return_select">back</button>
+            }
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+
+            @if (string.IsNullOrEmpty(Model.SubDirectory))
+            {
+                <div class="row">
+                    <div class="col-md-8">
+                        <input class="form-control" id="subDirectoryName" />
+                    </div>
+                    <div class="col-md-4">
+                        <button class="btn btn-success btn-sm btn-block add_sub_directory">Add</button>
+                    </div>
+                </div>
+            }
+        </div>
+        <div class="col-md-9">
+            <div class="row image_upload_area">
+                <div class="col-md-3">
+                    @Model.SubDirectory
+                </div>
+                <iframe id="UploadTarget" name="UploadTarget" data-dir="@Model.SubDirectory" style="position: absolute; left: -999em; top: -999em;"></iframe>
+                <form asp-controller="DocumentManagement" asp-action="UploadImage" id="upload_image_form" method="post" enctype="multipart/form-data" class="form-horizontal" target="UploadTarget">
+                    <input type="hidden" name="subDirectory" value="@Model.SubDirectory" />
+                    <div class="col-md-3 col-md-offset-3">
+                        <input type="file" name="image" />
+                    </div>
+                    <div class="col-md-3">
+                        <button class="btn btn-success btn-block image_upload">Upload</button>
+                    </div>
+                </form>
+            </div>
+            <br/>
+            <div class="row">
+                @foreach (var file in Model.Files)
+                {
+                    var relativePath = Url.Content("~/uploads/images/" +
+                        (string.IsNullOrEmpty(Model.SubDirectory) ? file : Model.SubDirectory + "/" + file));
+                    <div class="col-md-3 text-center">
+                        <img src="@relativePath" />
+                        <div>@file</div>
+                        <div class="row center-block">
+                            <button class="btn btn-danger btn-sm image_delete" data-img="@file" data-dir="@Model.SubDirectory">Delete</button>
+                            <button class="btn btn-success btn-sm image_select" data-img="@relativePath">Select</button>
+                        </div>
+                    </div>
+                }
+            </div>
+            <br/>
+            <br/>
+        </div>
+    </div>
+</div>

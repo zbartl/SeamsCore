@@ -41,7 +41,7 @@ namespace SeamsCore.Features.Account
             ViewData["ReturnUrl"] = returnUrl;
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, set lockoutOnFailure: true
-            var result = await _mediator.SendAsync(message);
+            var result = await _mediator.Send(message);
             if (result.Succeeded)
             {
                 return RedirectToLocal(returnUrl);
@@ -73,7 +73,7 @@ namespace SeamsCore.Features.Account
         public async Task<IActionResult> Register(Register.Command message, string returnUrl = null)
         {
             ViewData["ReturnUrl"] = returnUrl;
-            var result = await _mediator.SendAsync(message);
+            var result = await _mediator.Send(message);
             if (result.Succeeded)
             {
                 return RedirectToLocal(returnUrl);
@@ -89,7 +89,7 @@ namespace SeamsCore.Features.Account
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> LogOff()
         {
-            var result = await _mediator.SendAsync(new Logoff.Command());
+            await _mediator.Send(new Logoff.Command());
             return RedirectToAction("Index", "Home");
         }
 
@@ -127,7 +127,7 @@ namespace SeamsCore.Features.Account
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> ForgotPassword(ForgotPassword.Command message)
         {
-            await _mediator.SendAsync(message);
+            await _mediator.Send(message);
             return View("ForgotPasswordConfirmation");
         }
 
@@ -156,7 +156,7 @@ namespace SeamsCore.Features.Account
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> ResetPassword(ResetPassword.Command message)
         {
-            var result = await _mediator.SendAsync(message);
+            var result = await _mediator.Send(message);
             if (result == null && result.Succeeded)
             {
                 return RedirectToAction("ResetPasswordConfirmation");

@@ -16,7 +16,7 @@ namespace SeamsCore.Features.Page
 
         public async Task<IActionResult> Load(Load.Query query)
         {
-            var model = await _mediator.SendAsync(query);
+            var model = await _mediator.Send(query);
             if (string.IsNullOrEmpty(model.TemplateView))
             {
                 return View(model);
@@ -31,7 +31,7 @@ namespace SeamsCore.Features.Page
         {
             try
             {
-                await _mediator.SendAsync(command);
+                await _mediator.Send(command);
             }
             catch (CommandException e)
             {
@@ -46,14 +46,14 @@ namespace SeamsCore.Features.Page
         [Route("page/list")]
         public async Task<IActionResult> List()
         {
-            var pages = await _mediator.SendAsync(new List.Query());
+            var pages = await _mediator.Send(new List.Query());
             return View(pages);
         }
 
         [Route("page/create/{primary?}/{secondary?}/{tertiary?}")]
         public async Task<IActionResult> Create(string primary = "", string secondary = "", string tertiary = "")
         {
-            var command = await _mediator.SendAsync(new Create.Query { Primary = primary, Secondary = secondary, Tertiary = tertiary });
+            var command = await _mediator.Send(new Create.Query { Primary = primary, Secondary = secondary, Tertiary = tertiary });
             return View(command);
         }
 
@@ -61,7 +61,7 @@ namespace SeamsCore.Features.Page
         [Route("page/create/{primary?}/{secondary?}/{tertiary?}")]
         public async Task<IActionResult> Create(Create.Command command)
         {
-            await _mediator.SendAsync(command);
+            await _mediator.Send(command);
 
             return RedirectToAction("List");
         }
@@ -70,7 +70,7 @@ namespace SeamsCore.Features.Page
         [Route("page/update-priority")]
         public async Task<IActionResult> UpdatePriority([FromBody] UpdatePriority.Command command)
         {
-            await _mediator.SendAsync(command);
+            await _mediator.Send(command);
 
             return Json("success");
         }

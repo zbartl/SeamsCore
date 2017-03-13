@@ -16,7 +16,7 @@ namespace SeamsCore.Features.PageSettings
     /// </summary>
     public class Save
     {
-        public class Command : IAsyncRequest
+        public class Command : IRequest
         {
             public string Primary { get; set; }
             public string Secondary { get; set; }
@@ -27,7 +27,7 @@ namespace SeamsCore.Features.PageSettings
             public int Priority { get; set; }
         }
 
-        public class Handler : AsyncRequestHandler<Command>
+        public class Handler : IAsyncRequestHandler<Command>
         {
             private readonly SeamsContext _db;
 
@@ -41,7 +41,7 @@ namespace SeamsCore.Features.PageSettings
             /// </summary>
             /// <param name="message">The command.</param>
             /// <returns>A task</returns>
-            protected override async Task HandleCore(Command message)
+            public async Task Handle(Command message)
             {
                 var page = await _db.Pages.FirstOrDefaultAsync(p =>
                     p.Primary == message.Primary &&

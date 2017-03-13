@@ -17,14 +17,14 @@ namespace SeamsCore.Features.Page
     /// </summary>
     public class Create
     {
-        public class Query : IAsyncRequest<Command>
+        public class Query : IRequest<Command>
         {
             public string Primary { get; set; }
             public string Secondary { get; set; }
             public string Tertiary { get; set; }
         }
 
-        public class Command : IAsyncRequest<Unit>
+        public class Command : IRequest<Unit>
         {
             public string Primary { get; set; }
             public string Secondary { get; set; }

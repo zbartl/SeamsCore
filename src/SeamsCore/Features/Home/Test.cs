@@ -11,7 +11,7 @@ namespace SeamsCore.Features.Home
 {
     public class Test
     {
-        public class Query : IAsyncRequest<Result>
+        public class Query : IRequest<Result>
         {
             public int Divisor { get; set; }
         }

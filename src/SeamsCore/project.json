@@ -4,7 +4,7 @@
     "AutoMapper.Extensions.Microsoft.DependencyInjection": "1.1.2",
     "FluentValidation.AspNetCore": "6.4.0-beta8",
     "HtmlTags.AspNetCore": "4.2.0",
-    "MediatR": "2.1.0",
+    "MediatR": "3.0.1",
     "MediatR.Extensions.Microsoft.DependencyInjection": "1.0.1",
     "Polly": "5.0.3",
     "Microsoft.AspNetCore.Diagnostics": "1.1.0",
@@ -75,8 +75,8 @@
   },
 
   "scripts": {
-    "prepublish": [ "bower install", "dotnet bundle" ], 
-    "postcompile": [ "dotnet publish -o dist --no-build"],
+    "prepublish": [ "bower install", "dotnet bundle" ],
+    //"postcompile": [ "dotnet publish -o dist --no-build"],
     "postpublish": [ "dotnet publish-iis -p dist -f %publish:FullTargetFramework%" ]
   }
 }

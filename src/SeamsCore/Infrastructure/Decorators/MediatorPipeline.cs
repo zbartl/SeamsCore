@@ -9,20 +9,20 @@ using System.Threading.Tasks;
 namespace SeamsCore.Infrastructure.Decorators
 {
     public class MediatorPipeline<TRequest, TResponse>
-      : IRequestHandler<TRequest, TResponse>
+      : IAsyncRequestHandler<TRequest, TResponse>
       where TRequest : IRequest<TResponse>
     {
-        private readonly IRequestHandler<TRequest, TResponse> _inner;
+        private readonly IAsyncRequestHandler<TRequest, TResponse> _inner;
         private readonly IEnumerable<IValidator<TRequest>> _validators;
 
-        public MediatorPipeline(IRequestHandler<TRequest, TResponse> inner,
+        public MediatorPipeline(IAsyncRequestHandler<TRequest, TResponse> inner,
             IEnumerable<IValidator<TRequest>> validators)
         {
             _inner = inner;
             _validators = validators;
         }
 
-        public TResponse Handle(TRequest message)
+        public async Task<TResponse> Handle(TRequest message)
         {
             var failures = _validators
                 .Select(v => v.Validate(message))
@@ -34,7 +34,7 @@ namespace SeamsCore.Infrastructure.Decorators
                 throw new ValidationException(failures);
             }
 
-            return _inner.Handle(message);
-    }
+            return await _inner.Handle(message);
+        }
     }
 }

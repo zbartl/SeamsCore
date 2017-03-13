@@ -14,7 +14,7 @@ namespace SeamsCore.Features.Account
 {
     public class ResetPassword
     {
-        public class Command : IAsyncRequest<IdentityResult>
+        public class Command : IRequest<IdentityResult>
         {
             [Required]
             [EmailAddress]

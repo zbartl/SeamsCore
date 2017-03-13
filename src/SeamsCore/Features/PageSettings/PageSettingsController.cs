@@ -22,7 +22,7 @@ namespace SeamsCore.Features.PageSettings
         [HttpPost]
         public async Task<JsonResult> Save(Save.Command command)
         {
-            await _mediator.SendAsync(command);
+            await _mediator.Send(command);
 
             var result = new { Success = "True", Message = "Error Message" };
             return Json(result);

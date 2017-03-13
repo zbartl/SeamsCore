@@ -6,6 +6,9 @@ using SeamsCore.Infrastructure;
 using Microsoft.Extensions.Options;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using System.IO;
+using System;
 
 namespace SeamsCore.Features.DocumentManagement
 {
@@ -31,9 +34,81 @@ namespace SeamsCore.Features.DocumentManagement
                 ImagesDirectory = _environment.WebRootPath + "/uploads/images/",
                 SubDirectory = subDirectory
             };
-            var result = await _mediator.SendAsync(query);
+            var result = await _mediator.Send(query);
 
             return View(result);
+        }
+
+        [HttpPost]
+        [Route("documents/images/upload/{subDirectory?}")]
+        public async Task<IActionResult> UploadImage(string subDirectory, IFormFile image)
+        {
+            var command = new UploadImage.Command
+            {
+                AllowedExtensions = new List<string>(_settings.AllowedImageExtensions.Split(',')),
+                ImagesDirectory = _environment.WebRootPath + "/uploads/images/",
+                SubDirectory = subDirectory,
+                Image = image
+            };
+
+            try
+            {
+                await _mediator.Send(command);
+            }
+            catch (Exception e)
+            {
+                Response.StatusCode = 500;
+                return Json(e.Message);
+            }
+
+            return Json("success");
+        }
+
+        [HttpPost]
+        [Route("documents/images/create-directory")]
+        public async Task<IActionResult> CreateDirectory([FromForm] string subDirectory)
+        {
+            var command = new CreateDirectory.Command
+            {
+                WorkingDirectory = _environment.WebRootPath + "/uploads/images/",
+                SubDirectory = subDirectory
+            };
+
+            try
+            {
+                await _mediator.Send(command);
+            }
+            catch (Exception e)
+            {
+                Response.StatusCode = 500;
+                return Json(e.Message);
+            }
+
+            return Json("success");
+        }
+
+        [HttpPost]
+        [Route("documents/images/delete")]
+        public async Task<IActionResult> DeleteImage([FromForm] string subDirectory, [FromForm] string imageName)
+        {
+            var command = new DeleteImage.Command
+            {
+                ImagesDirectory = _environment.WebRootPath + "/uploads/images/",
+                SubDirectory = subDirectory,
+                ImageName = imageName
+            };
+
+            try
+            {
+                await _mediator.Send(command);
+            }
+            catch (Exception e)
+            {
+                Response.StatusCode = 500;
+                return Json(e.Message);
+            }
+
+            return Json("success");
         }
     }
 }

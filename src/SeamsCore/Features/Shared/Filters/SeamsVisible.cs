@@ -23,14 +23,14 @@ namespace SeamsCore.Features.Shared.Filters
             var secondary = context.ActionDescriptor.RouteValues["action"];
 
             //Create a new page if this controller / action does not have one yet.
-            await _mediator.SendAsync(new Page.CreateWhenNonexistent.Command
+            await _mediator.Send(new Page.CreateWhenNonexistent.Command
             {
                 Primary = primary,
                 Secondary = secondary,
                 Tertiary = ""
             });
 
-            var page = await _mediator.SendAsync(new Page.Load.Query
+            var page = await _mediator.Send(new Page.Load.Query
             {
                 Primary = primary,
                 Secondary = secondary,

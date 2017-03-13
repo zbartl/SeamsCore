@@ -263,3 +263,22 @@
   border-left: 1px solid #c8d1d3;
   border-bottom: 1px solid #c8d1d3; }
 
+.directory_management_area {
+  background-color: #f0f4f5;
+  padding: 10px 15px;
+  height: 100vh; }
+
+.image_upload_area {
+  background-color: #f0f4f5;
+  padding: 10px 0; }
+
+#image_upload_modal .modal-dialog {
+  width: 90%; }
+
+#image_upload_modal .modal-body {
+  padding: 0; }
+
+#image_upload_modal img {
+  max-height: 75px;
+  max-width: 75px; }
+

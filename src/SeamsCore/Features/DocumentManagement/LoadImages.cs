@@ -12,7 +12,7 @@ namespace SeamsCore.Features.DocumentManagement
 {
     public class LoadImages
     {
-        public class Query : IAsyncRequest<Result>
+        public class Query : IRequest<Result>
         {
             public List<string> AllowedExtensions { get; set; }
             public string ImagesDirectory { get; set; }
@@ -30,12 +30,12 @@ namespace SeamsCore.Features.DocumentManagement
         {
             public async Task<Result> Handle(Query message)
             {
-                DirectoryInfo dir = new DirectoryInfo(message.ImagesDirectory);
+                DirectoryInfo dir = new DirectoryInfo(message.ImagesDirectory + message.SubDirectory);
 
                 var images = 
                     dir.EnumerateFiles("*.*", SearchOption.TopDirectoryOnly)
                     .OrderBy(d => d.CreationTime)
-                    .Select(d => d.FullName)
+                    .Select(d => d.Name)
                     .Distinct()
                     .Where(s => message.AllowedExtensions.Any(ext => ext == Path.GetExtension(s)))
                     .ToList();

@@ -16,7 +16,7 @@ namespace SeamsCore.Features.PageSettings
     /// </summary>
     public class Load
     {
-        public class Query : IAsyncRequest<Result>
+        public class Query : IRequest<Result>
         {
             public string Primary { get; set; }
             public string Secondary { get; set; }

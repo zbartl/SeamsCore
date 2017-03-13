@@ -105,18 +105,12 @@ namespace SeamsCore
                 {
                     _.AssemblyContainingType(typeof(Startup));
                     _.WithDefaultConventions();
-                    //_.AddAllTypesOf<IGamingService>();
-                    //_.ConnectImplementationsToTypesClosing(typeof(IValidator<>));
                 });
 
                 config.For(typeof(ILogger<>)).Use(typeof(Logger<>));
 
-                //config.For(typeof(IValidator<>)).Add(typeof(DefaultValidator<>));
-                var handlerType = config.For(typeof(IRequestHandler<,>));
+                var handlerType = config.For(typeof(IAsyncRequestHandler<,>));
                 handlerType.DecorateAllWith(typeof(MediatorPipeline<,>));
-
-                var asyncHandlerType = config.For(typeof(IAsyncRequestHandler<,>));
-                asyncHandlerType.DecorateAllWith(typeof(RetryHandler<,>));
 
                 //Populate the container using the service collection
                 config.Populate(services);

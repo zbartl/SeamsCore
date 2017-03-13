@@ -14,11 +14,11 @@ namespace SeamsCore.Features.Account
 {
     public class Logoff
     {
-        public class Command : IAsyncRequest
+        public class Command : IRequest
         {
         }
 
-        public class Handler : AsyncRequestHandler<Command>
+        public class Handler : IAsyncRequestHandler<Command>
         {
             private readonly UserManager<User> _userManager;
             private readonly SignInManager<User> _signInManager;
@@ -29,7 +29,7 @@ namespace SeamsCore.Features.Account
                 _signInManager = signInManager;
             }
 
-            protected override async Task HandleCore(Command message)
+            public async Task Handle(Command message)
             {
                 await _signInManager.SignOutAsync();
             }

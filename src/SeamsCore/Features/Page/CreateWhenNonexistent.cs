@@ -16,7 +16,7 @@ namespace SeamsCore.Features.Page
     /// </summary>
     public class CreateWhenNonexistent
     {
-        public class Command : IAsyncRequest<Unit>
+        public class Command : IRequest<Unit>
         {
             public string Primary { get; set; }
             public string Secondary { get; set; }

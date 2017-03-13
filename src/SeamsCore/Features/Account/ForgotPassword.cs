@@ -14,14 +14,14 @@ namespace SeamsCore.Features.Account
 {
     public class ForgotPassword
     {
-        public class Command : IAsyncRequest
+        public class Command : IRequest
         {
             [Required]
             [EmailAddress]
             public string Email { get; set; }
         }
 
-        public class Handler : AsyncRequestHandler<Command>
+        public class Handler : IAsyncRequestHandler<Command>
         {
             private readonly UserManager<User> _userManager;
 
@@ -30,7 +30,7 @@ namespace SeamsCore.Features.Account
                 _userManager = userManager;
             }
 
-            protected override async Task HandleCore(Command message)
+            public async Task Handle(Command message)
             {
                 var user = await _userManager.FindByNameAsync(message.Email);
                 if (user != null && (await _userManager.IsEmailConfirmedAsync(user)))

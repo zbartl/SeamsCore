@@ -14,7 +14,7 @@ namespace SeamsCore.Features.Account
 {
     public class Login
     {
-        public class Command : IAsyncRequest<SignInResult>
+        public class Command : IRequest<SignInResult>
         {
             [Required]
             [EmailAddress]

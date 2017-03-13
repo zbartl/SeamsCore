@@ -16,7 +16,7 @@
     /// </summary>
     public class UpdatePriority
     {
-        public class Command : IAsyncRequest<Unit>
+        public class Command : IRequest<Unit>
         {
             public List<int> Ids { get; set; }
         }
