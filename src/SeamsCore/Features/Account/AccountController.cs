@@ -12,6 +12,7 @@ using MediatR;
 
 namespace SeamsCore.Features.Account
 {
+    [Route("account")]
     public class AccountController : Controller
     {
         private readonly IMediator _mediator;
@@ -21,8 +22,7 @@ namespace SeamsCore.Features.Account
             _mediator = mediator;
         }
 
-        //
-        // GET: /Account/Login
+        [Route("~/login")]
         [HttpGet]
         [AllowAnonymous]
         public IActionResult Login(string returnUrl = null)
@@ -31,8 +31,7 @@ namespace SeamsCore.Features.Account
             return View();
         }
 
-        //
-        // POST: /Account/Login
+        [Route("~/login")]
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
@@ -55,8 +54,7 @@ namespace SeamsCore.Features.Account
             return View(message);
         }
 
-        //
-        // GET: /Account/Register
+        [Route("register")]
         [HttpGet]
         [AllowAnonymous]
         public IActionResult Register(string returnUrl = null)
@@ -65,8 +63,7 @@ namespace SeamsCore.Features.Account
             return View();
         }
 
-        //
-        // POST: /Account/Register
+        [Route("register")]
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
@@ -83,8 +80,7 @@ namespace SeamsCore.Features.Account
             return View(message);
         }
 
-        //
-        // POST: /Account/LogOff
+        [Route("~/logoff")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> LogOff()
@@ -111,8 +107,7 @@ namespace SeamsCore.Features.Account
         //    return View(result.Succeeded ? "ConfirmEmail" : "Error");
         //}
 
-        //
-        // GET: /Account/ForgotPassword
+        [Route("forgot-password")]
         [HttpGet]
         [AllowAnonymous]
         public IActionResult ForgotPassword()
@@ -120,8 +115,7 @@ namespace SeamsCore.Features.Account
             return View();
         }
 
-        //
-        // POST: /Account/ForgotPassword
+        [Route("forgot-password")]
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
@@ -131,8 +125,7 @@ namespace SeamsCore.Features.Account
             return View("ForgotPasswordConfirmation");
         }
 
-        //
-        // GET: /Account/ForgotPasswordConfirmation
+        [Route("forgot-password/confirmation")]
         [HttpGet]
         [AllowAnonymous]
         public IActionResult ForgotPasswordConfirmation()
@@ -140,8 +133,7 @@ namespace SeamsCore.Features.Account
             return View();
         }
 
-        //
-        // GET: /Account/ResetPassword
+        [Route("reset-password")]
         [HttpGet]
         [AllowAnonymous]
         public IActionResult ResetPassword(string code = null)
@@ -149,8 +141,7 @@ namespace SeamsCore.Features.Account
             return code == null ? View("Error") : View();
         }
 
-        //
-        // POST: /Account/ResetPassword
+        [Route("reset-password")]
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
@@ -165,8 +156,7 @@ namespace SeamsCore.Features.Account
             return View();
         }
 
-        //
-        // GET: /Account/ResetPasswordConfirmation
+        [Route("reset-password/confirmation")]
         [HttpGet]
         [AllowAnonymous]
         public IActionResult ResetPasswordConfirmation()

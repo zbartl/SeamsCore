@@ -64,24 +64,11 @@ namespace SeamsCore
 
             services.AddMvc(opt =>
                 {
-                    opt.Conventions.Add(new FeatureConvention());
                     opt.Filters.Add(typeof(DbContextTransactionFilter));
                     opt.Filters.Add(typeof(ValidatorActionFilter));
                     //opt.ModelBinderProviders.Insert(0, new EntityModelBinderProvider());
                 })
-                .AddRazorOptions(options =>
-                {
-                    // {0} - Action Name
-                    // {1} - Controller Name
-                    // {2} - Area Name
-                    // {3} - Feature Name
-                    // Replace normal view location entirely
-                    options.ViewLocationFormats.Clear();
-                    options.ViewLocationFormats.Add("/Features/{3}/{1}/{0}.cshtml");
-                    options.ViewLocationFormats.Add("/Features/{3}/{0}.cshtml");
-                    options.ViewLocationFormats.Add("/Features/Shared/{0}.cshtml");
-                    options.ViewLocationExpanders.Add(new FeatureViewLocationExpander());
-                })
+                .AddFeatureFolders()
                 .AddFluentValidation(cfg => { cfg.RegisterValidatorsFromAssemblyContaining<Startup>(); });
 
             services.AddAutoMapper(typeof(Startup));

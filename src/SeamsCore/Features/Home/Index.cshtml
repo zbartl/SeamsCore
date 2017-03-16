@@ -2,13 +2,10 @@
 @{
     ViewData["Title"] = "Home Page";
 }
+
 @section scripts {
-    <script>
-        $(function() {
-            Page.Load.init();
-        });
-    </script>
-} 
+    @await Component.InvokeAsync("PageLoad")
+}
 
 <br/>
 <br/>
